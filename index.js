@@ -1,22 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// const express = require('express');
-// const app = express();
-// app.get('/', (req,res)=> {
-//   console.log('Hello World!');
-// })
-// app.listen(3000,() => {
-//   console.log('App listening on port 3000...Nodemon');
-// })
+import Express from 'express';
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
+const app = Express();
+const port = 3000;
+app.get('/', (req,res)=> {
+   console.log('Hello World!');
+})
+app.listen(port,() => {
+   console.log('App listening on port 3000...');
+})
+
+
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  <h1>Hello, world! First page</h1>,
   document.getElementById('root')
 );
