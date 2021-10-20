@@ -1,71 +1,111 @@
 // Each module is installed via "npm install (module name)"
+import ReactDOM from "react-dom";
+import React, { Component, useMemo, useState, useEffect } from "react";
+import Table from "./table";
+
 const express = require("express");
 const {MongoClient} = require('mongodb');
 const app = express();
 const port = 3000;
 
-// mongodb url has username:password and database name
-var url = "mongodb+srv://dbUser:GIfZyEKRLZlwUueW@"+
-"cluster0.tt2bl.mongodb.net/Cargo?"+
-"retryWrites=true&w=majority";
 
-// this function calls the database from mongodb and
-// calls another function for retrieving data from "cargo_info" table
-var invokeDatabase = function(callback) {
 
-    // with Mongodb module and connect function, we get the connection with url info
-    MongoClient.connect(url, function(err, db) {
-    db = db.db("Cargo");
-    if(err) {
-        console.log("Unable to connect database");
-        callback(err, null);
-        return;
-    }    
-    // Information for successful connection 
-    console.log("Connected successfully to database server");
+/* const onHeaderClick = () => {
+    return {
+      onClick: () => {
+        // do something
+      },
+    };
+}; */
+class Index extends React.Component{
+    render(){
+        return <div className="">
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead key>
+                <TableRow>
+                    <TableCell>Dessert (100g serving)</TableCell>
+                    <TableCell align="right">Calories</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {rows.map((row) => (
+                    <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                    <TableCell component="th" scope="row">
+                        {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.calories}</TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
 
-    // This function calls select specified collection and its all elements
-    selectDataFiltered(db, function(err, data) {
-        callback(err, data);
-    });
 
-    // connection is closed
-    db.close;
-    });
-};
-
-// "Cargo_info" database collection is selected by find function
-var selectDataFiltered = function(db, callback){
-
-    // the given collection is converted into a normal array
-    db.collection("cargo_info").find({}).toArray (function(err, result) {
-        if (err) throw err;
-        callback(err, result);        
-    });
-};
-
-// This function provides to define a route handler for GET reqs to a given URL
-app.get('', function(req, res) {
-
-    console.log("Someone connected.")
-
-    // Set up database connection using this function
-    invokeDatabase(function(err, data) {
-        if(err)
-            // if con is unable, standard error is given
-            res.status(500).json({error: err});
-        else
-            // if con is ok, the data is presented with json format
-            res.json(data);
+    </div>
     }
-    );
-});
+}
 
-// With this function provides that this application is running on specified port
-app.listen(port, () => {
-   
-   // Information for listening the application 
-   console.log('App listening on port 3000...');
-})
+function Index(){
+    // sample data array looks like this
+    const columns = useMemo(
+        () => [
+          {
+            // first group - TV Show
+            Header: "TV Show",
+            // First group columns
+            columns: [
+              {
+                Header: "Name",
+                accessor: "show.name"
+              },
+              {
+                Header: "Type",
+                accessor: "show.type"
+              }
+            ]
+          },
+          {
+            // Second group - Details
+            Header: "Details",
+            // Second group columns
+            columns: [
+              {
+                Header: "Language",
+                accessor: "show.language"
+              },
+              {
+                Header: "Genre(s)",
+                accessor: "show.genres"
+              },
+              {
+                Header: "Runtime",
+                accessor: "show.runtime"
+              },
+              {
+                Header: "Status",
+                accessor: "show.status"
+              }
+            ]
+          }
+        ],
+        []
+      );
+
+      return (
+        <div className="Index">
+          <Table columns={columns} data={data} />
+        </div>
+      );
+}
+
+ReactDOM.render(
+    <Index />, 
+    document.getElementById("root"));
 
 
+
+    export default Index;
