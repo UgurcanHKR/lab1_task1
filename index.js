@@ -1,7 +1,7 @@
 const express = require("express");
 const {MongoClient} = require('mongodb');
 const app = express();
-const port = 8000;
+const port = 3000;
 
 var url = "mongodb+srv://dbUser:GIfZyEKRLZlwUueW@"+
 "cluster0.tt2bl.mongodb.net/Cargo?"+
@@ -20,7 +20,6 @@ var invokeDatabase = function(callback) {
 
     selectDataFiltered(db, function(err, data) {
         callback(err, data);
-        
     });
     db.close;
     });
@@ -49,7 +48,7 @@ app.get('', function(req, res) {
 
 
 app.listen(port, () => {
-   console.log('App listening on port 8000...');
+   console.log('App listening on port 3000...');
 })
 
 
