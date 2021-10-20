@@ -59,7 +59,6 @@ app.get('', function(req, res) {
             res.json(data);
     }
     );
-        //res.send('Welcome G')
 });
 
 // With this function provides that this application is running on specified port
