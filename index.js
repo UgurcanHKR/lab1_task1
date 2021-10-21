@@ -5,11 +5,6 @@
 const Component = require('react');  
 const ReactTable = require("react-table");
 
-/*const express = require("express");
- const {MongoClient} = require('mongodb');
-const app = express();
-const port = 3000; */
-
 function Index() {
     const data = [{ name: 'Ayaan', age: 26 },
               { name: 'Ahana', age: 22 },
