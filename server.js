@@ -10,7 +10,7 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 const { connectToDatabase } = require('./database');
 
 app.get("/", (_, res) => {
-    res.sendFile("index.html");
+    res.sendFile('/index.html');
 });
 app.use(measurementsRouter);
 
