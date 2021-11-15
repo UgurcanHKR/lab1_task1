@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useTable } from "react-table";
 import { connectToDatabase } from './database.js';
-import './table.css';
+
 
 function Measurements() {
     
