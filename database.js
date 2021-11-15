@@ -10,7 +10,7 @@ exports.connectToDatabase = async function() {
         for(let i=1;i<=10;i++){
             Measurement.create({
                 unit_id:Math.random()*10000,
-                temperature:(3+Math.random()*3).toFixed(1),
+                temperature:(0+Math.random()*3).toFixed(1),
                 unix_timestamp:new Date().setDate(i),
             });
         }

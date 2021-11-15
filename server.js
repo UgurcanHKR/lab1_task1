@@ -1,31 +1,24 @@
-const express = require("express");
-const {MongoClient} = require('mongodb');
+require('dotenv').config();
+const path = require('path');
+
+const express = require('express');
 const app = express();
-const port = 8080;
+const { router: measurementsRouter } = require('./api/routes/measurements.routes');
 
-// This function provides to define a route handler for GET reqs to a given URL
-app.get('/', function(req, res){
+app.use(express.static(path.resolve(__dirname, 'dist'))); 
 
-    // 
-    var options = {
-        root: path.join(__dirname)
-    };
-    // a variable for specified html page
-    var fileName = 'index.html';
+const { connectToDatabase } = require('./database');
 
-    // With this stetement, we can transfer a file at the given path
-    res.sendFile(fileName, options, function (err) {
-        if (err) {
-            next(err);
-        } else {
-            console.log('Sent:', fileName);
-        }
-    });
+app.get("/", (_, res) => {
+    res.sendFile("index.html");
 });
+app.use(measurementsRouter);
 
-// With this function provides that this application is running on specified port
-app.listen(port, () => {
-
-   // Information for listening the application 
-   console.log('App listening on port : ${port}');
-});
+connectToDatabase()
+    .then(() => {
+        const PORT = process.env.PORT || 8080;
+        app.listen(PORT, () => {
+            console.log('Listening to port ' + PORT);
+        });
+    })
+    .catch((error) => console.error(error));
