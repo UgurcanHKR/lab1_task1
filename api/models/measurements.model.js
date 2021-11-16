@@ -5,11 +5,6 @@ const measurementSchema = new mongoose.Schema({
     unit_id: Number,
     temperature: Number,
     unix_timestamp: Number,
-}, {
-    timestamps: {
-        updatedAt: 'updated_at',
-        createdAt: 'created_at',
-    },
 });
 
 exports.schema = measurementSchema;
