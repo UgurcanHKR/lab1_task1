@@ -22,7 +22,7 @@ function Measurements() {
         Header: 'Temperature',
         accessor: 'temperature'
     },{
-        Header: 'Id',
+        Header: 'Date',
         accessor: 'Unix_timestamp'
     }]);
 
