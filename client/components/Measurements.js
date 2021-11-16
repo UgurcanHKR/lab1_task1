@@ -37,7 +37,7 @@ function Measurements() {
     const tableInstance = useTable({
         columns,
         data
-    },
+    }, 
         useSortBy)
     const {getTableProps, getTableBodyProps, 
         headerGroups, rows, prepareRow} = tableInstance;
