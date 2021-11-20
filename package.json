@@ -8,16 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"webpack --config webpack.dev.js \" \"nodemon server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/UgurcanHKR/lab_tasks.git"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/preset-react": "^7.16.0",
-    "babel-loader": "^8.2.3",
     "concurrently": "^6.4.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -28,13 +21,11 @@
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
     "react-table": "^7.7.0",
-    "webpack-dev-middleware": "^5.2.1",
-    "webpack-hot-middleware": "^2.25.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15",
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
