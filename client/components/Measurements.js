@@ -86,6 +86,7 @@ function Measurements() {
         </tbody>
     </table>
     <h1>Average Temperature: {avg} </h1>
+    <h1>Hey!!</h1>
         </>
     )
 }
