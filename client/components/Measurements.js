@@ -1,53 +1,76 @@
-import React, { useState, useMemo } from "react";
-import { useTable } from "react-table";
-import { connectToDatabase } from './database.js';
-
+import React, { useState, useMemo, useEffect } from "react";
+import { useTable, useSortBy } from "react-table";
 
 function Measurements() {
     
-    const [data, setData] = useState();
+    const [data, setData] = useState([{unit_id: "",temperature: "",date: ""}]);
 
-    async function fetchMeasurements() {
+    useEffect(()=>{
+        fetchMeasurements()
+        //setTimeout(fetchMeasurements, 0);
+        setInterval(fetchMeasurements, 5000);
+    }, [])
+
+    async function fetchMeasurements(){
+        console.log("fetch")
         const response = await fetch("/api/measurements");
-        const json = await response.json();
-        setData(json);
+        const data = await response.json()
+        const newData = data.map((measurement, index) => ({
+            ...measurement,
+            id: index+1,            
+            date: new Date(measurement.unix_timestamp).toLocaleDateString(),
+        }))       
+        setData(newData)
     }
-
-    const data = useMemo(() => connectToDatabase, []);
-
+        
     const columns = useMemo(() => [{
-        Header: 'Id',
-        accessor: 'unit_id'
+        Header: 'Number',
+        accessor: 'id'
     },{
         Header: 'Temperature',
         accessor: 'temperature'
     },{
         Header: 'Date',
-        accessor: 'Unix_timestamp'
-    }]);
+        accessor: 'date'
+    },],[]);    
 
     const tableInstance = useTable({
         columns,
-        data,
-    })
+        data
+    }, 
+        useSortBy)
     const {getTableProps, getTableBodyProps, 
         headerGroups, rows, prepareRow} = tableInstance;
+    
+    const sliceddata = data.slice(data.length-5, data.length);
+    var avg = sliceddata.reduce((total, next) => total + next.temperature, 0) / sliceddata.length;
+    console.log(avg)
+    avg = (Math.round(avg * 100) / 100).toFixed(2)
+
     return (
         <>
         <table {...getTableProps()}>
-        <head>
+        <thead>
             {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                 {
                     headerGroup.headers.map(column => (
-                        <th {...column.getHeaderProps()}>
-                        {column.render('Header')}</th>
+                        <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                        {column.render('Header')}
+                        <span>
+                            {column.isSorted
+                                ? column.isSortedDesc
+                                    ? ' 🔽'
+                                    : ' 🔼'
+                                : ''}
+                            </span>
+                        </th>
                     )) 
                 }
                     
                 </tr>
             ))}
-        </head>
+        </thead>
         <tbody {...getTableBodyProps()}>
         {rows.map(row => {
                 prepareRow(row)
@@ -62,6 +85,7 @@ function Measurements() {
             })}
         </tbody>
     </table>
+    <h1>Average Temperature: {avg} </h1>
         </>
     )
 }
