@@ -18,7 +18,7 @@ app.use(measurementsRouter);
 
 connectToDatabase()
     .then(() => {
-        const PORT = process.env.PORT || 8080;
+        const PORT = process.env.PORT || 8083;
         app.listen(PORT, () => {
             console.log('Listening to port ' + PORT);
         });
