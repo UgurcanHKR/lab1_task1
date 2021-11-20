@@ -2,10 +2,10 @@
 const express = require("express");
 const {MongoClient} = require('mongodb');
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // mongodb url has username:password and database name
-var url = "mongodb+srv://dbUser:GIfZyEKRLZlwUueW@"+
+var url = "mongodb+srv://dbUser:ruCnY2RhMs9JuOJ5@"+
 "cluster0.tt2bl.mongodb.net/Cargo?"+
 "retryWrites=true&w=majority";
 
@@ -38,7 +38,7 @@ var invokeDatabase = function(callback) {
 var selectDataFiltered = function(db, callback){
 
     // the given collection is converted into a normal array
-    db.collection("cargo_info").find({}).toArray (function(err, result) {
+    db.collection("cargo_infos").find({}).toArray (function(err, result) {
         if (err) throw err;
         callback(err, result);        
     });
@@ -65,7 +65,7 @@ app.get('', function(req, res) {
 app.listen(port, () => {
    
    // Information for listening the application 
-   console.log('App listening on port 3000...');
+   console.log('App listening on port 3001...');
 })
 
 
