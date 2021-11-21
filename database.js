@@ -16,7 +16,7 @@ exports.connectToDatabase = async function() {
     // Print the count value of Measurement
     console.log(measurementCount);
 
-    // To check the count value of Measurement, 
+    // To check the count value of Measurement 
     if(measurementCount === 0){
 
         // This loop creates 10 documents
